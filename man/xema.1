@@ -1,0 +1,133 @@
+.\"  Copyright (c) 2012-2014.  All rights reserved.
+.\"
+.\"  See the accompanying file LICENSE, version 2000-Apr-09 or later
+.\"  (the contents of which are also included in unzip.h) for terms of use.
+.\"  If, for some reason, all these files are missing, the Info-ZIP license
+.\"  also may be found at:  ftp://ftp.info-zip.org/pub/infozip/license.html
+.\"
+.\"  xema by Chris Morrison.
+.\"
+.\" =========================================================================
+.\" define .EX/.EE (for multiline user-command examples; normal Courier font)
+.de EX
+.in +4n
+.nf
+.ft CW
+..
+.de EE
+.ft R
+.fi
+.in -4n
+..
+.\" =========================================================================
+.TH XEMA 1 "16 June 2012 (v0.01)" "Chris Morrison"
+.SH NAME
+xema \-\- extract e-mail attachments.
+.PD
+.SH SYNOPSIS
+\fBxema\fP [\fB\-q,\ \-\-quiet\fP] [\fB\-s,\ \-\-print-summary] [\fB\-p \fIprefix-option\fP, \-\-prefix=\fIprefix-option\fP] [\fB\-c \fIconflict-action\fP, \-\-conflict-action=\fIconflict-action\fP] \fIsource_path\fP \fIdestination_path\fP
+.PD
+.\" =========================================================================
+.SH DESCRIPTION
+\fIxema\fP will parse the e-mail or mailbox given in \fIsource_path\fP and extract all the attachments contained therein to \fIdestination_path\fP. Formats currently supported are RFC 5322 messages and mailboxes and Microsoft Outlook PST files.
+.PD
+.\" =========================================================================
+.SH ARGUMENTS
+.TP
+.IR source_path
+The path of the source file or directory to be searched for attachments. If \fIsource_path\fP is a file it will be parsed for e-mails and attachments, if it is a directory each file contained therein will be parsed. \fBSub-directories will not recursed\fP.
+.IP \fIdestination_path\fP
+The location to which any extracted attachments will be saved. This argument must refer to an existing, accessible directory.
+.IP [\fB\-p\fP\ \fIprefix-option\fP,\ \fB\-\-prefix=\fP\fIprefix-option\fP]
+Prefix extracted attachments files according to the options specified. Available option are:
+.RS
+.IP \fInone\fP
+do not prefix the extracted attachment's filename. This is the default option.
+.IP \fIsubject\fP
+prefix the extracted attachment's filename with the subject of the e-mail, or NO_SUBJECT if the e-mail does not have a subject.
+.IP \fIsender\fP
+prefix the extracted attachment's filename with the address of the sender, or NO_ADDRESS if the e-mail does not contain the sender's address.
+.RE
+.IP [\fB\-c\fP\ \fIconflict-action\fP,\ \fB\-\-conflict-action=\fP\fIconflict_action\fP]
+Specifies the action to be taken in the event that a file with the same name as the attachment being extracted exists at the specified destination. Available actions are:
+.RS
+.IP \fIdiscard\fP
+discard the attachment being extracted.
+.IP \fIoverwrite\fP
+overwrite the existing file with the attachment being extracted.
+.IP \fIrename\fP
+rename the attachment being extracted by adding some random letters and numbers to the filename. This is the default action.
+.RE
+.\" =========================================================================
+.SH OPTIONS
+The following options are available:
+.TP
+.B \-q,\ \-\-quiet
+Perform the extraction quietly without printing any information or warnings to the screen. Errors will still be sent to \fBstderr\fP.
+.TP
+.B \-s,\ \-\-print-summary
+Prints a summary of what has been done, once processing has been completed. This  option ignores the \fB\--quiet\fP option.
+.PD
+.\" =========================================================================
+.\" =========================================================================
+.SH EXAMPLES
+To use \fIxema\fP to extract all the attachments from the mailbox \fIinbox.mbox\fP
+into the current directory, using default options:
+.PP
+.EX
+xema /home/myhome/inbox.mbx ./
+.EE
+.PP
+To extract all the attachments from the mailbox \fIinbox.mbox\fP
+into the current directory and print a summary when done:
+.PP
+.EX
+xema -s /home/myhome/inbox.mbx ./
+.EE
+.PP
+To extract all the attachments from the mailbox \fIinbox.mbox\fP
+into the current directory, prefixing each filename with the e-mail address of the sender:
+.PP
+.EX
+xema --prefix=sender /home/myhome/inbox.mbox ./
+.EE
+.PP
+To extract all the attachments from the mailbox \fIinbox.mbox\fP
+into the directory foo, printing only a summary:
+.PP
+.EX
+xema -qs /home/myhome/inbox.mbox /home/myhome/foo/
+.EE
+.\" =========================================================================
+.SH DIAGNOSTICS
+The following return codes may be returned by \fIxema\fP:
+.RS
+.IP 0
+normal; no errors or warnings detected.
+.IP 1
+one or more warnings or non-fatal errors were encountered, but processing completed
+successfully anyway.
+.IP 2
+a fatal error occurred.  Processing probably
+failed immediately.
+.IP 7
+invalid options were specified on the command line.
+.\" =========================================================================
+.SH BUGS
+None found yet.
+.\" =========================================================================
+.SH "SEE ALSO"
+\fImail\fP(1)
+.PD
+.\" =========================================================================
+.\".SH URL
+.\"The Info-ZIP home page is currently at
+.\".EX
+.\"\fChttp://www.info-zip.org/pub/infozip/\fR
+.\".EE
+.\".PD
+.\" =========================================================================
+.SH AUTHORS
+The primary \fIxema\fP author is Chris Morrison
+.PD
+.\" =========================================================================
