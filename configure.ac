@@ -1,5 +1,3 @@
-dnl Process this file with autoconf to produce a configure script.
-
 AC_INIT(xema, 0.1)
 
 AC_CONFIG_HEADERS([config.h])
@@ -23,7 +21,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
 
 AM_GLIB_GNU_GETTEXT
 
-PKG_CHECK_MODULES(libolmec, [libolmec-0.1 >= 0.1])
+PKG_CHECK_MODULES(libolmec, [libolmec >= 0.1])
 PKG_CHECK_MODULES(libpst, [libpst >= 0.6.59])
 PKG_CHECK_MODULES(zlib, [zlib >= 1.2.8])
 AC_SUBST(libolmec_CFLAGS)
