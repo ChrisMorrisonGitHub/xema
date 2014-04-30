@@ -33,6 +33,7 @@ AC_SUBST(zlib_LIBS)
 AC_CHECK_LIB([unistring], [u8_to_u32], [], [AC_MSG_ERROR([libunistring does not appear to be (correctly) installed)])])
 AC_CHECK_LIB([popt], [poptGetOptArg], [], [AC_MSG_ERROR([libpopt does not appear to be (correctly) installed)])])
 AC_CHECK_LIB([uuid], [uuid_generate], [], [AC_MSG_ERROR([libuuid does not appear to be (correctly) installed)])])
+AC_CHECK_LIB([bsd], [strlcat], [], [AC_MSG_ERROR([libbsd does not appear to be (correctly) installed)])])
 
 AC_OUTPUT([
 Makefile

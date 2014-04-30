@@ -42,6 +42,7 @@
 #include "xema.h"
 #include "base64.h"
 #include "utils.h"
+#include "config.h"
 
 static int quiet_mode = false;
 static int prefix_mode = PREFIX_NONE;
@@ -58,6 +59,7 @@ int main(int argc, const char **argv)
 {
     //FILE *fileptr = NULL;
     int rc = 0;
+    int print_version = 0;
     char *prefix = NULL;
     char *conflict_val = NULL;
     char buffer[BUFF_SIZE];
@@ -70,13 +72,14 @@ int main(int argc, const char **argv)
         {"prefix", 'p', POPT_ARG_STRING, &prefix, 0, "Specifies the information to prepend to the extracted filename", "PREFIX"},
         {"conflict-action", 'c', POPT_ARG_STRING, &conflict_val, 0, "Specifies the action that will be taken if the file being extracted already exist in the destination directory.", "MODE"},
         {"quiet", 'q', POPT_ARG_NONE, &quiet_mode, 0, "Puts xema in quiet mode, no output will be sent to stdout. Errors will still be sent to stderr.", NULL},
+		{"version", 'v', POPT_ARG_NONE, &print_version, 0, "Prints version information and exits.", NULL},
         {"print-summary", 's', POPT_ARG_NONE, &print_summary, 0, "Prints a summary of what has been done once extraction is complete. This option ignores the \'quiet\' option.", NULL},
         POPT_AUTOHELP POPT_TABLEEND
     };
     struct stat st;
         
     poptContext context = poptGetContext(NULL, argc, argv, opts, POPT_CONTEXT_POSIXMEHARDER);
-    poptSetOtherOptionHelp(context, "[OPTIONS] <source> <destination>");
+    poptSetOtherOptionHelp(context, "[OPTIONS] SOURCE DESTINATION");
     
     while ((rc = poptGetNextOpt(context)) > 0)
     {
@@ -86,6 +89,12 @@ int main(int argc, const char **argv)
             fprintf(stderr, "%s: %s\n", poptBadOption(context, POPT_BADOPTION_NOALIAS), poptStrerror(rc));
             return X_FATAL;
         }
+    }
+
+    if (print_version == true)
+    {
+        print_version();
+		return 0;
     }
     
     if (prefix != NULL)
@@ -215,6 +224,13 @@ badUsage:
     poptFreeContext(context);
     
     return X_FATAL;
+}
+
+void print_version(void)
+{
+	printf("%s version %s\nCopyright (C) 2014 Chris Morrison\n", PACKAGE, VERSION);
+	printf("License GPLv3+: GNU GPL version 3 or later <https://www.gnu.org/licenses/gpl-3.0.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.");
+	printf("\n\nWritten by Chris Morrison <chris-morrison@cyberservices.com>\n");
 }
 
 int do_extraction(void)
