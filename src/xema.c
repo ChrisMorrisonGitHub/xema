@@ -1,4 +1,4 @@
-/* Copyright (C) 2012, Chris Morrison <chris-morrison@homemail.com>
+/* Copyright (C) 2012, Chris Morrison <chris-morrison@cyberservices.com>
  *
  * This file is part of xema.
  *
@@ -94,7 +94,7 @@ int main(int argc, const char **argv)
     if (print_ver == true)
     {
         print_version();
-	return 0;
+	return X_SUCCESS;
     }
     
     if (prefix != NULL)
